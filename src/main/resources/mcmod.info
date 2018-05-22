@@ -1,0 +1,16 @@
+[
+    {
+        "modid": "heatedtank",
+        "name": "HeatedTank",
+        "description": "",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": [""],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": [""]
+    }
+]
