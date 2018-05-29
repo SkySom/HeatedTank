@@ -9,11 +9,15 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fluids.FluidUtil;
 
 import javax.annotation.Nonnull;
 
@@ -30,8 +34,8 @@ public class BlockHeatedTank extends BlockSidedBase<TileEntityHeatedTank> implem
     @Override
     @Nonnull
     public BlockStateContainer createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[] {TANK_STATE},
-                new IUnlistedProperty[] {PropertySideType.SIDE_TYPE[0], PropertySideType.SIDE_TYPE[1],
+        return new ExtendedBlockState(this, new IProperty[]{TANK_STATE},
+                new IUnlistedProperty[]{PropertySideType.SIDE_TYPE[0], PropertySideType.SIDE_TYPE[1],
                         PropertySideType.SIDE_TYPE[2], PropertySideType.SIDE_TYPE[3],
                         PropertySideType.SIDE_TYPE[4], PropertySideType.SIDE_TYPE[5]});
     }
@@ -57,6 +61,11 @@ public class BlockHeatedTank extends BlockSidedBase<TileEntityHeatedTank> implem
     @Override
     public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState blockState) {
         return new TileEntityHeatedTank(tier);
+    }
+
+    @Override
+    protected boolean handleAdditionalTileActions(World world, TileEntityHeatedTank tileEntityHeatedTank, EntityPlayer entityPlayer, EnumHand hand, ItemStack currentItem) {
+        return FluidUtil.interactWithFluidHandler(entityPlayer, hand, tileEntityHeatedTank.getInternalCapability());
     }
 
     @Override

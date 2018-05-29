@@ -10,6 +10,8 @@ import io.sommers.heatedtank.block.EnumTankState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -70,7 +72,8 @@ public class TileEntityHeatedTank extends TileEntitySidedBase<IFluidHandler> imp
     @Override
     public void readFromDisk(NBTTagCompound data) {
         super.readFromDisk(data);
-        this.createFluidTank(data.getInteger("tier"));
+        this.tier = data.getInteger("tier");
+        this.createFluidTank(tier);
         this.fluidTank.readFromNBT(data.getCompoundTag("tank"));
         this.fluidTank.setTileEntity(this);
     }
@@ -81,6 +84,11 @@ public class TileEntityHeatedTank extends TileEntitySidedBase<IFluidHandler> imp
         data.setInteger("tier", tier);
         data.setTag("tank", fluidTank.writeToNBT(new NBTTagCompound()));
         return data;
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
