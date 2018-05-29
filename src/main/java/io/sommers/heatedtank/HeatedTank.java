@@ -44,9 +44,9 @@ public class HeatedTank extends BaseModFoundation<HeatedTank> {
 
     private void createConfigs(ConfigRegistry config) {
         ConfigEntry temperatureConfig = new ConfigEntry("General", "Hot Temperature", Type.INTEGER,
-                "100", "The Fluid Temperature, at which, the block will be considered hot");
+                "500", "The Fluid Temperature, at which, the block will be considered hot");
         config.addEntry("hot_temperature", temperatureConfig);
-        this.hotTemperature = temperatureConfig.getInt(100);
+        this.hotTemperature = temperatureConfig.getInt(500);
         for (int tier = 1; tier <= 3; tier++) {
             String propertyName = "Tier " + tier + " Capacity";
             String amount = Integer.toString(tier * 8000);
